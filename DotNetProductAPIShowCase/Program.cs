@@ -7,12 +7,19 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using DotNetProductAPIShowCase.Infrastructure.DatabaseContexts;
 using Microsoft.EntityFrameworkCore;
+using DotNetProductAPIShowCase.Presentations.Filters;
 [assembly: ApiController]
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<ExceptionFilter>();
+}).ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = true; // Disabled auto return 400 and manual validate to use custom exception filter.
+});
+
 builder.Services.AddValidatorsFromAssemblyContaining<ProductPageValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateProductPriceValidator>();

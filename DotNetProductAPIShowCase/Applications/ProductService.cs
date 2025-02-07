@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using DotNetProductAPIShowCase.Applications.DTOS;
+using DotNetProductAPIShowCase.Applications.Exceptions;
 using DotNetProductAPIShowCase.Domains;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -32,8 +33,7 @@ public class ProductService
 
         if (product == null)
         {
-            // TODO: throw custom notfound exception
-            return new Product { Id = 1, Name = "mock" };
+            throw new NotFoundException($"Cannot find product by id {id}");
         }
 
         return product;

@@ -8,12 +8,12 @@ public class ProductPageValidator : AbstractValidator<ProductPageDTO>
 {
     public ProductPageValidator()
     {
-        RuleFor(x => x.Page)
+        RuleFor(productPageDTO => productPageDTO.Page)
             .NotNull()
             .GreaterThan(0)
             .WithMessage("Page number must be greater than 0");
 
-        RuleFor(x => x.PageSize)
+        RuleFor(productPageDTO => productPageDTO.PageSize)
             .NotNull()
             .GreaterThan(0)
             .LessThanOrEqualTo(100)
