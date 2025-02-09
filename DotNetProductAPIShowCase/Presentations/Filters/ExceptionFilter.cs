@@ -12,6 +12,7 @@ public class ExceptionFilter : IExceptionFilter
     public void OnException(ExceptionContext context)
     {
 
+        //Can custom more base on each type of exception
         if (context.Exception is NotFoundException notFoundException)
         {
             this.Error = new ErrorModel
