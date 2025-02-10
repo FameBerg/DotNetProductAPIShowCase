@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=<SA_PASSWORD>
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - showcase-network
+
+  dotnet-app:
+    build: .
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "5001:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - showcase-network
+
+networks:
+  showcase-network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:
