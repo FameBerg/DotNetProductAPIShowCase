@@ -28,6 +28,7 @@ namespace DotNetProductAPIShowCase.Controllers
             _updateProductPriceDTO = updateProductPriceDTO;
         }
 
+        // separate validation method into private for DRY principle
         private async Task ValidateProductDTO(ProductDTO product)
         {
             ValidationResult validationResult = await _productDTOValidator.ValidateAsync(product);

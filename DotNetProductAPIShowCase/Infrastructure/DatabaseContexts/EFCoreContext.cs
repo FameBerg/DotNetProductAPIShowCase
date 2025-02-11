@@ -6,6 +6,7 @@ namespace DotNetProductAPIShowCase.Infrastructure.DatabaseContexts;
 
 public class EFCoreContext : DbContext
 {
+    // Table name
     public DbSet<Product> Products { get; set; }
 
     public EFCoreContext(DbContextOptions<EFCoreContext> options) : base(options) { }

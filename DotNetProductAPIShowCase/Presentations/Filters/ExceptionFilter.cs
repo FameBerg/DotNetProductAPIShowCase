@@ -2,6 +2,8 @@ using System;
 using DotNetProductAPIShowCase.Applications.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNetProductAPIShowCase.Presentations.Filters;
 
@@ -30,6 +32,27 @@ public class ExceptionFilter : IExceptionFilter
                 badRequestException.Message,
                 badRequestException.StackTrace?.ToString()
             );
+        }
+        else if (context.Exception is DbUpdateException dbUpdateException)
+        {
+            if (dbUpdateException.InnerException is SqlException sqlException && sqlException.Message.Contains("UNIQUE KEY"))
+            {
+                this.Error = new ErrorModel
+            (
+                400,
+                dbUpdateException.Message,
+                dbUpdateException.StackTrace?.ToString()
+            );
+            }
+            else
+            {
+                this.Error = new ErrorModel
+                (
+                    500,
+                    dbUpdateException.Message,
+                    dbUpdateException.StackTrace?.ToString()
+                );
+            }
         }
         else
         {
