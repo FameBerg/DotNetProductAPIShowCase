@@ -33,7 +33,7 @@ public class ProductService
 
         if (product == null)
         {
-            throw new NotFoundException($"We Cannot find product by id {id}");
+            throw new NotFoundException($"Sorry We Cannot find product by id {id}");
         }
 
         return product;
