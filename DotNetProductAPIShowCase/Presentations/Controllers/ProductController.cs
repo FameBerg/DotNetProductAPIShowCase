@@ -68,6 +68,13 @@ namespace DotNetProductAPIShowCase.Controllers
         }
 
         [HttpGet]
+        [Route("healthcheck")]
+        public ActionResult<string> HealthCheck()
+        {
+            return Ok("Hello World!");
+        }
+
+        [HttpGet]
         [Route("product")]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts([FromQuery] ProductPageDTO productPage)
         {
